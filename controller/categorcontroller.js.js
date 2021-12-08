@@ -3,7 +3,7 @@ const Category = db.category;
 const Op = db.Sequelize.Op;
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
-  
+
    // Create a Tutorial
    const cate = {
     title: req.body.title,

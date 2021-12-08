@@ -13,6 +13,7 @@ const uploadFiles = async (req, res) => {
       Post.create({
         type: req.file.mimetype,
         name: req.file.originalname,
+        user_id: req.file.user_id,
         cat_id:req.body.cat_id,
         data:"/resources/static/assets/uploads/",
       }).then((image) => {
@@ -28,13 +29,47 @@ const uploadFiles = async (req, res) => {
       return res.send(`Error when trying upload images: ${error}`);
     }
   };
+  //"category","comments","users"
   const getposts = async (req, res) =>{
 
-    Post.findAll({include: ["category","comments"]}).then(data1=>{
+    Post.findAll({include: [
+      {
+      model:db.comment,
+      as:"comments",include:[
+        {
+          model:db.users,
+          as:"users"
+        },
+        
+      ]
+    },"category"]}).then(data1=>{
       return res.send({
         data:data1
       });
     });
+  }
+
+  // get comments according to  post
+  const getcomments=async(req,res)=>{
+    Post.findByPk(req.params.id, { include: [{
+      model:db.comment,
+      as:"comments",include:[{
+        model:db.users,
+          as:"users"
+      }]
+    }] }).then(data1=>{
+      res.status(200).send({
+        message:'Sucess',
+        data:data1,
+      
+      })
+    });
+
+      // console.log("getpostssss");
+      // res.send('Displaying information for uid ' + req.params.id);
+
+      ///Post.findByPk()
+
   }
 
   // exports.findAll=(req,res)=>{
@@ -46,7 +81,7 @@ const uploadFiles = async (req, res) => {
   // };
   
   module.exports = {
-    uploadFiles,getposts
+    uploadFiles,getposts,getcomments
   };
 
 

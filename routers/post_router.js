@@ -5,5 +5,6 @@ module.exports=app=>{
 
     router.post("/addpost",upload.single("file"),post.uploadFiles);
     router.get("/allpost",post.getposts)
+    router.get("/getcomments/:id",post.getcomments)
     app.use('/api/post', router);
 }

@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
       name: {
         type: DataTypes.STRING,
       },
+      user_id: {
+        type: DataTypes.STRING,
+      },
       cat_id: {
         type: DataTypes.STRING,
       },
