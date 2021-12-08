@@ -7,7 +7,7 @@ exports.create = (req, res) => {
    // Create a Tutorial
    const cate = {
     title: req.body.title,
-   
+  
   };
    // Save Tutorial in the database
    Category.create(cate)
@@ -22,3 +22,4 @@ exports.create = (req, res) => {
    });
   
 };
+

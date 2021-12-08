@@ -4,5 +4,6 @@ module.exports=app=>{
     const upload = require("../middleware/upload");
 
     router.post("/addpost",upload.single("file"),post.uploadFiles);
+    router.get("/allpost",post.getposts)
     app.use('/api/post', router);
 }
