@@ -8,8 +8,8 @@ var corsOptions = {
 };
 app.use(cors(corsOptions));
 const db=require('./model')
-db.sequelize.sync();
-//db.sequelize.sync({ force: true })
+//db.sequelize.sync();
+db.sequelize.sync({ force: true })
 // parse requests of content-type - application/json
 app.use(express.json());
 
@@ -22,13 +22,15 @@ app.use(express.json());
  require('./routers/post_router')(app);
  require('./routers/category_router')(app);
  require('./routers/comment_router')(app);
+// require('./routers/review_router')(app);
+
   // simple route
   app.get("/", (req, res) => {
     res.json({ message: "Welcome to KKtech application." });
   });
   // set port, listen for requests
   //const PORT = process.env.PORT || 8070;
-  const PORT = 8080;
+  const PORT = 5000;
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
   });

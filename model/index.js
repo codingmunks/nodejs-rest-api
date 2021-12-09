@@ -26,6 +26,8 @@ db.comment = require("./comment.js")(sequelize, Sequelize);
 db.users = require("./user.js")(sequelize, Sequelize);
 db.post = require("./postmodel.js")(sequelize, Sequelize);
 db.category = require("./category.js")(sequelize, Sequelize);
+//db.review = require("./review")(sequelize, Sequelize);
+
 
 db.post.belongsTo(db.category,{
   foreignKey:'cat_id',
@@ -45,8 +47,6 @@ db.post.belongsTo(db.users,{
   foreignKey:"user_id",
   as: "users"
 });
-
-
 
 
 module.exports = db;
