@@ -1,18 +1,22 @@
 const db=require('../model');
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize, Sequelize) => {
     const Image = sequelize.define("post", {
+      id: {
+        type: Sequelize.INTEGER,
+         primaryKey: true,
+      },
       type: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
       },
       name: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
       },
       review: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
       },
 
       user_id: {
-        type: DataTypes.STRING,
+        type: Sequelize.INTEGER,
         references: {
           // This is a reference to another model
           model: db.users,
@@ -27,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
         
       },
       cat_id: {
-        type: DataTypes.STRING,
+        type: Sequelize.INTEGER,
         references: {
           // This is a reference to another model
           model: db.category,
@@ -41,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       },
       data: {
-        type:DataTypes.STRING,
+        type:Sequelize.STRING,
       },
     });
   

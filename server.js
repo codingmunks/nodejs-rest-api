@@ -8,8 +8,8 @@ var corsOptions = {
 };
 app.use(cors(corsOptions));
 const db=require('./model')
-//db.sequelize.sync();
-db.sequelize.sync({ force: true })
+db.sequelize.sync();
+//db.sequelize.sync({ force: true })
 // parse requests of content-type - application/json
 app.use(express.json());
 
