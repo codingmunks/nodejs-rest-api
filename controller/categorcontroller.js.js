@@ -33,33 +33,39 @@ exports.getcategorylist = (req, res) => {
     })
   })
 };
-exports.getDataByCategoryById = (req, res) => {
+exports.getDataByCategoryById = async (req, res) => {
   console.log(req.params.id);
-  db.post.findAll({
+  const posts = await db.post.findAll({
     where: {
       cat_id: req.params.id
-    }
-  }, {
+    },
     include: [
       {
-      // model:db.review,  
-      // as:"reviews",
-      model:db.comment,
-      as:"comments",include:[
-        {
-          model:db.users,
-          as:"users"
-        },
-        
-      ]
-    },"category","reviews"]}).then(data1 => {
-
-    res.status(200).send({
-      message: 'Sucess',
-      data: data1,
-
-    })
+        model: db.category,
+        as: "category"
+      },
+      {
+        model: db.comment,
+        as: "comments",
+        include:[
+          {
+            model:db.users,
+            as:"users"
+          }
+        ]
+      },  
+      {
+        model:db.review,
+        as:"reviews"
+      }
+    ]
   });
+
+  res.status(200).send({
+    message: 'Sucess',
+    data: posts,
+  });
+
 }
 
 
