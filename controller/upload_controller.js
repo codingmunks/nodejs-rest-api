@@ -1,7 +1,8 @@
 const fs = require("fs");
 const db=require('../model');
 const Post = db.post;
-const uploadFiles = async (req, res) => {
+const uploadFiles = async (req, res) => 
+{
     try {
       console.log(req.file);
   
@@ -13,16 +14,35 @@ const uploadFiles = async (req, res) => {
       Post.create({
         type: req.file.mimetype,
         name: req.file.originalname,
-        user_id: req.file.user_id,
+        user_id: req.body.user_id,
         cat_id:req.body.cat_id,
         data:"/resources/static/assets/uploads/",
-      }).then((image) => {
-        // fs.writeFileSync(
-        //   __basedir +"/resources/static/assets/tmp/" + image.name,
-        //   image.data
-        // );
-  
-        return res.send(`File has been uploaded.`);
+      }).then((data1) => {
+            
+        // update the review
+        console.log(data1.id);
+        Post.findByPk(data1.id, { include: [{
+          model:db.comment,
+          as:"comments",include:[{
+            model:db.users,
+              as:"users"
+          }, ],
+        },"category","reviews"] }).then(data=>{
+
+          Post.update({review:data.reviews.length},{
+            where: {
+              id: data.id
+             } 
+          })
+    
+          
+        });
+        res.status(200).send({
+          message:'Sucess',
+          data:data1,
+        
+        })
+
       });
     } catch (error) {
       console.log(error);
@@ -34,6 +54,8 @@ const uploadFiles = async (req, res) => {
 
     Post.findAll({include: [
       {
+      // model:db.review,  
+      // as:"reviews",
       model:db.comment,
       as:"comments",include:[
         {
@@ -42,22 +64,24 @@ const uploadFiles = async (req, res) => {
         },
         
       ]
-    },"category"]}).then(data1=>{
+    },"category","reviews"]}).then(data1=>
+      {
       return res.send({
         data:data1
       });
     });
   }
-
   // get comments according to  post
   const getcomments=async(req,res)=>{
-    Post.findByPk(req.params.id, { include: [{
+    Post.findByPk(req.params.id, { include: [
+      {
       model:db.comment,
       as:"comments",include:[{
         model:db.users,
           as:"users"
-      }]
-    }] }).then(data1=>{
+      }, ],
+    },"category","reviews"] }).then(data1=>{
+
       res.status(200).send({
         message:'Sucess',
         data:data1,

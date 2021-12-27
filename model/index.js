@@ -26,7 +26,7 @@ db.comment = require("./comment.js")(sequelize, Sequelize);
 db.users = require("./user.js")(sequelize, Sequelize);
 db.post = require("./postmodel.js")(sequelize, Sequelize);
 db.category = require("./category.js")(sequelize, Sequelize);
-//db.review = require("./review")(sequelize, Sequelize);
+db.review = require("./review.js")(sequelize, Sequelize);
 
 
 db.post.belongsTo(db.category,{
@@ -35,9 +35,17 @@ db.post.belongsTo(db.category,{
 
 });
 db.post.hasMany(db.comment, { as: "comments" ,foreignKey:"post_id"})
+db.post.hasMany(db.review, { as: "reviews" ,foreignKey:"post_id"})
+db.category.hasMany(db.post,{ as: "posts" ,foreignKey:"cat_id"})
+//db.category.belongsToMany(db.post,{as:"posts",foreignKey:"cat_id"})
+
 db.comment.belongsTo(db.post,{
   foreignKey:"post_id",
   as: "posts"
+});
+db.review.belongsTo(db.post,{
+  foreignKey:"post_id",
+  as: "reviews"
 });
 db.comment.belongsTo(db.users,{
   foreignKey:"user_id",

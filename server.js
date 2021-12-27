@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const ngrok = require('ngrok');
 global.__basedir = __dirname;
 
 var corsOptions = {
@@ -22,7 +23,7 @@ app.use(express.json());
  require('./routers/post_router')(app);
  require('./routers/category_router')(app);
  require('./routers/comment_router')(app);
-// require('./routers/review_router')(app);
+ require('./routers/review_router')(app);
 
   // simple route
   app.get("/", (req, res) => {
@@ -32,5 +33,19 @@ app.use(express.json());
   //const PORT = process.env.PORT || 8070;
   const PORT = 5000;
   app.listen(PORT, () => {
+  
     console.log(`Server is running on port ${PORT}.`);
   });
+
+//   ngrok.connect(PORT, function (err, url) {
+//     console.log(`Node.js local server is publicly-accessible at ${url}`);
+// });
+//   ngrok.connect({
+//     proto : 'http',
+//     addr : PORT,
+// }, (err, url) => {
+//     if (err) {
+//         console.error('Error while connecting Ngrok',err);
+//         return new Error('Ngrok Failed');
+//     }
+// });

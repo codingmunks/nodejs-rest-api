@@ -5,6 +5,8 @@ module.exports = app => {
   
     // Create a new faq
     router.post("/addcategory", category.create);
+    router.get("/catlist",category.getcategorylist)
+    router.get("/:id", category.getDataByCategoryById);
    
     app.use('/api/category', router);
   };
