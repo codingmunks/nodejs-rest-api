@@ -24,6 +24,7 @@ app.use(express.json());
  require('./routers/category_router')(app);
  require('./routers/comment_router')(app);
  require('./routers/review_router')(app);
+ require('./routers/viewrouter')(app);
 
   // simple route
   app.get("/", (req, res) => {

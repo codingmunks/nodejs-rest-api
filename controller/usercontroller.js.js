@@ -8,32 +8,32 @@ var jwt = require("jsonwebtoken");
 
 // Create and Save a new Tutorial
 exports.create = async (req, res) => {
-  
+
   if(!req.body.name)
   {
     res.status(404).send({
       message:'name is required'
     })
   }
-  if(!req.body.email)
+ else if(!req.body.email)
   {
     res.status(404).send({
        message:'email is required'
     })
   }
-  if(!validator.validate(req.body.email))
+  else if(!validator.validate(req.body.email))
   {
     res.status(404).send({
       message:'email is not valid'
     })
   }
-  if(!req.body.password)
+  else if(!req.body.password)
   {
     res.status(404).send({
       message:'password is required'
     })
   }
-  if(!req.body.age)
+  else  if(!req.body.age)
   {
     res.status(404).send({
       message:'age is required'

@@ -27,8 +27,8 @@ db.users = require("./user.js")(sequelize, Sequelize);
 db.post = require("./postmodel.js")(sequelize, Sequelize);
 db.category = require("./category.js")(sequelize, Sequelize);
 db.review = require("./review.js")(sequelize, Sequelize);
-
-
+db.view=require("./viewpost.js")(sequelize, Sequelize);
+ 
 db.post.belongsTo(db.category,{
   foreignKey:'cat_id',
   as: "category",
